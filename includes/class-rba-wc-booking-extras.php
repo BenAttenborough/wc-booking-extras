@@ -157,6 +157,9 @@ class Rba_Wc_Booking_Extras {
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 
+		// Add plugin settings to WooCommerce
+		$this->loader->add_filter( 'woocommerce_get_settings_pages', $plugin_admin, 'rba_wcbe_add_settings' );
+
 	}
 
 	/**

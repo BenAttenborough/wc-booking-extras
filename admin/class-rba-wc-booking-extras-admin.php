@@ -100,4 +100,15 @@ class Rba_Wc_Booking_Extras_Admin {
 
 	}
 
+	/**
+	 * Load dependencies for additional WooCommerce settings
+	 *
+	 * @since    1.0.0
+	 * @access   private
+	 */
+	public function rba_wcbe_add_settings( $settings ) {
+		$settings[] = include plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-rba-wc-booking-extras-settings.php';
+		return $settings;
+	}  
+
 }
