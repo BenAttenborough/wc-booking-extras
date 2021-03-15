@@ -37,6 +37,35 @@ if ( ! defined( 'WPINC' ) ) {
  */
 define( 'RBA_WC_BOOKING_EXTRAS_VERSION', '1.0.0' );
 
+//
+
+if (!function_exists('is_plugin_active')) {
+    include_once(ABSPATH . '/wp-admin/includes/plugin.php');
+}
+
+/**
+* Check for the existence of WooCommerce and any other requirements
+*/
+function rba_wcbe_check_requirements() {
+    if ( is_plugin_active( 'woocommerce/woocommerce.php' ) && is_plugin_active( 'woocommerce-bookings/woocommerce-bookings.php') ) {
+        return true;
+    } else {
+        add_action( 'admin_notices', 'rba_wcbe_missing_wc_notice' );
+        return false;
+    }
+}
+
+
+/**
+* Display a message advising WooCommerce is required
+*/
+function rba_wcbe_missing_wc_notice() { 
+    $class = 'notice notice-error';
+    $message = __( 'WooCommerce Bookings Extras requires WooCommerce AND WooCommerce Bookings to be installed and active.', 'rba-wc-booking-extras' );
+ 
+    printf( '<div class="%1$s"><p>%2$s</p></div>', esc_attr( $class ), esc_html( $message ) ); 
+}
+
 /**
  * The code that runs during plugin activation.
  * This action is documented in includes/class-rba-wc-booking-extras-activator.php
@@ -75,8 +104,10 @@ require plugin_dir_path( __FILE__ ) . 'includes/class-rba-wc-booking-extras.php'
  */
 function run_rba_wc_booking_extras() {
 
-	$plugin = new Rba_Wc_Booking_Extras();
-	$plugin->run();
+	if (rba_wcbe_check_requirements()) {
+        $plugin = new Rba_Wc_Booking_Extras();
+		$plugin->run();    
+    }
 
 }
 run_rba_wc_booking_extras();
