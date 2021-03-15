@@ -1,41 +1,48 @@
 <?php
 
 /**
- * Fired during plugin activation
+ * The file that defines the core plugin class
  *
- * @link       http://www.benattenborough.org.uk/
- * @since      0.1.0
+ * A class definition that includes attributes and functions used across both the
+ * public-facing side of the site and the admin area.
  *
- * @package    wc-booking-extras
- * @subpackage wc-booking-extras/includes
+ * @link       https://github.com/BenAttenborough
+ * @since      1.0.0
+ *
+ * @package    Rba_Wc_Booking_Extras
+ * @subpackage Rba_Wc_Booking_Extras/includes
  */
 
 /**
- * Fired during plugin activation.
+ * The core plugin class.
  *
- * This class defines all code necessary to run during the plugin's activation.
+ * This is used to define internationalization, admin-specific hooks, and
+ * public-facing site hooks.
  *
- * @since      0.1.0
- * @package    wc-booking-extras
- * @subpackage wc-booking-extras/includes
- * @author     Ben Attenborough
+ * Also maintains the unique identifier of this plugin as well as the current
+ * version of the plugin.
+ *
+ * @since      1.0.0
+ * @package    Rba_Wc_Booking_Extras
+ * @subpackage Rba_Wc_Booking_Extras/includes
+ * @author     Ben Attenborough <me@benattenborough.org.uk>
  */
-class RBA_WCBE {
+class Rba_Wc_Booking_Extras {
 
 	/**
 	 * The loader that's responsible for maintaining and registering all hooks that power
 	 * the plugin.
 	 *
-	 * @since    0.1.0
+	 * @since    1.0.0
 	 * @access   protected
-	 * @var      RBA_WCBE_Loader    $loader    Maintains and registers all hooks for the plugin.
+	 * @var      Rba_Wc_Booking_Extras_Loader    $loader    Maintains and registers all hooks for the plugin.
 	 */
 	protected $loader;
 
 	/**
 	 * The unique identifier of this plugin.
 	 *
-	 * @since    0.1.0
+	 * @since    1.0.0
 	 * @access   protected
 	 * @var      string    $plugin_name    The string used to uniquely identify this plugin.
 	 */
@@ -44,7 +51,7 @@ class RBA_WCBE {
 	/**
 	 * The current version of the plugin.
 	 *
-	 * @since    0.1.0
+	 * @since    1.0.0
 	 * @access   protected
 	 * @var      string    $version    The current version of the plugin.
 	 */
@@ -57,13 +64,15 @@ class RBA_WCBE {
 	 * Load the dependencies, define the locale, and set the hooks for the admin area and
 	 * the public-facing side of the site.
 	 *
-	 * @since    0.1.0
+	 * @since    1.0.0
 	 */
 	public function __construct() {
-		
-		$this->version = '0.1.0';
-		
-		$this->plugin_name = 'wc-booking-extras';
+		if ( defined( 'RBA_WC_BOOKING_EXTRAS_VERSION' ) ) {
+			$this->version = RBA_WC_BOOKING_EXTRAS_VERSION;
+		} else {
+			$this->version = '1.0.0';
+		}
+		$this->plugin_name = 'rba-wc-booking-extras';
 
 		$this->load_dependencies();
 		$this->set_locale();
@@ -75,6 +84,15 @@ class RBA_WCBE {
 	/**
 	 * Load the required dependencies for this plugin.
 	 *
+	 * Include the following files that make up the plugin:
+	 *
+	 * - Rba_Wc_Booking_Extras_Loader. Orchestrates the hooks of the plugin.
+	 * - Rba_Wc_Booking_Extras_i18n. Defines internationalization functionality.
+	 * - Rba_Wc_Booking_Extras_Admin. Defines all hooks for the admin area.
+	 * - Rba_Wc_Booking_Extras_Public. Defines all hooks for the public side of the site.
+	 *
+	 * Create an instance of the loader which will be used to register the hooks
+	 * with WordPress.
 	 *
 	 * @since    1.0.0
 	 * @access   private
@@ -85,33 +103,33 @@ class RBA_WCBE {
 		 * The class responsible for orchestrating the actions and filters of the
 		 * core plugin.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-rba-wcbe-loader.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-rba-wc-booking-extras-loader.php';
 
 		/**
 		 * The class responsible for defining internationalization functionality
 		 * of the plugin.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-rba-wcbe-i18n.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-rba-wc-booking-extras-i18n.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in the admin area.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-rba-wcbe-admin.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-rba-wc-booking-extras-admin.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in the public-facing
 		 * side of the site.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-rba-wcbe-public.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-rba-wc-booking-extras-public.php';
 
-		$this->loader = new RBA_WCBE_Loader();
+		$this->loader = new Rba_Wc_Booking_Extras_Loader();
 
 	}
 
 	/**
 	 * Define the locale for this plugin for internationalization.
 	 *
-	 * Uses the RBA_WCBE_i18n class in order to set the domain and to register the hook
+	 * Uses the Rba_Wc_Booking_Extras_i18n class in order to set the domain and to register the hook
 	 * with WordPress.
 	 *
 	 * @since    1.0.0
@@ -119,7 +137,7 @@ class RBA_WCBE {
 	 */
 	private function set_locale() {
 
-		$plugin_i18n = new RBA_WCBE_i18n();
+		$plugin_i18n = new Rba_Wc_Booking_Extras_i18n();
 
 		$this->loader->add_action( 'plugins_loaded', $plugin_i18n, 'load_plugin_textdomain' );
 
@@ -134,14 +152,11 @@ class RBA_WCBE {
 	 */
 	private function define_admin_hooks() {
 
-		$plugin_admin = new RBA_WCBE_Admin( $this->get_plugin_name(), $this->get_version() );
+		$plugin_admin = new Rba_Wc_Booking_Extras_Admin( $this->get_plugin_name(), $this->get_version() );
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 
-        // Add plugin settings to WooCommerce
-        $this->loader->add_filter( 'woocommerce_get_settings_pages', $plugin_admin, 'rba_wcbe_add_settings' );
-        
 	}
 
 	/**
@@ -153,7 +168,7 @@ class RBA_WCBE {
 	 */
 	private function define_public_hooks() {
 
-		$plugin_public = new RBA_WCBE_Public( $this->get_plugin_name(), $this->get_version() );
+		$plugin_public = new Rba_Wc_Booking_Extras_Public( $this->get_plugin_name(), $this->get_version() );
 
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
@@ -184,7 +199,7 @@ class RBA_WCBE {
 	 * The reference to the class that orchestrates the hooks with the plugin.
 	 *
 	 * @since     1.0.0
-	 * @return    RBA_WCBE_Loader    Orchestrates the hooks of the plugin.
+	 * @return    Rba_Wc_Booking_Extras_Loader    Orchestrates the hooks of the plugin.
 	 */
 	public function get_loader() {
 		return $this->loader;

@@ -19,10 +19,10 @@
  * For more information, see the following discussion:
  * https://github.com/tommcfarlin/WordPress-Plugin-Boilerplate/pull/123#issuecomment-28541913
  *
- * @link       http://www.benattenborough.org.uk/
- * @since      0.1.0
+ * @link       https://github.com/BenAttenborough
+ * @since      1.0.0
  *
- * @package    wc-booking-extras
+ * @package    Rba_Wc_Booking_Extras
  */
 
 // If uninstall not called from WordPress, then exit.

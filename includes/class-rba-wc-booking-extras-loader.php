@@ -1,26 +1,27 @@
 <?php
 
 /**
- * Fired during plugin activation
+ * Register all actions and filters for the plugin
  *
- * @link       http://www.benattenborough.org.uk/
- * @since      0.1.0
+ * @link       https://github.com/BenAttenborough
+ * @since      1.0.0
  *
- * @package    wc-booking-extras
- * @subpackage wc-booking-extras/includes
+ * @package    Rba_Wc_Booking_Extras
+ * @subpackage Rba_Wc_Booking_Extras/includes
  */
 
 /**
- * Fired during plugin activation.
+ * Register all actions and filters for the plugin.
  *
- * This class defines all code necessary to run during the plugin's activation.
+ * Maintain a list of all hooks that are registered throughout
+ * the plugin, and register them with the WordPress API. Call the
+ * run function to execute the list of actions and filters.
  *
- * @since      0.1.0
- * @package    wc-booking-extras
- * @subpackage wc-booking-extras/includes
- * @author     Ben Attenborough
+ * @package    Rba_Wc_Booking_Extras
+ * @subpackage Rba_Wc_Booking_Extras/includes
+ * @author     Ben Attenborough <me@benattenborough.org.uk>
  */
-class RBA_WCBE_Loader {
+class Rba_Wc_Booking_Extras_Loader {
 
 	/**
 	 * The array of actions registered with WordPress.
